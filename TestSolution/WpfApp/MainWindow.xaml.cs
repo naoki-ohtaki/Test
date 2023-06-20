@@ -11,6 +11,7 @@ namespace WpfApp
         {
             InitializeComponent();
             //コミットテスト１
+            //コミットテスト２
         }
     }
 }
