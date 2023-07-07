@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace WpfApp
 {
@@ -7,23 +9,14 @@ namespace WpfApp
     /// </summary>
     public partial class MainWindow
     {
-        public readonly ViewModel ViewModel = new();
-
         public MainWindow()
         {
             InitializeComponent();
-            //ViewModel.SendMessageButton.MainWindow = this;
-            DataContext = ViewModel;
+            DataContext = new ViewModel();
         }
-
-        //private void btnSend_Click(object sender, RoutedEventArgs e)
-        //{
-        //    viewModel.メッセージAdd = new MessageInfo { Message = viewModel.SendMessage };
-        //}
 
         private void ListViewItem_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("test");
         }
         
     }

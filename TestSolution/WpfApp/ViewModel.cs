@@ -5,7 +5,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Threading;
+using WpfApp.Items;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace WpfApp
@@ -13,12 +16,10 @@ namespace WpfApp
     public class ViewModel : INotifyPropertyChanged
     {
         private string userName = "ユーザー01";
-        public ButtonCommand SendMessageButton { get; set; }= new ButtonCommand();
+        public ButtonCommand SendMessageButton { get; set; } = new ButtonCommand();
 
         public ViewModel()
         {
-            SendMessage = "初期値";
-
             スレッドAdd = new ThreadInfo { Thread = "General" };
             スレッドAdd = new ThreadInfo { Thread = "ニュース" };
             スレッドAdd = new ThreadInfo { Thread = "プロジェクト" };
@@ -27,7 +28,7 @@ namespace WpfApp
             メッセージAdd = new MessageInfo { Message = "asdfasdfasdf" };
             メッセージAdd = new MessageInfo { Message = "asdfasdfasdf" };
             メッセージAdd = new MessageInfo { Message = "asdfasdfasdf" };
-
+            
             表示件数Add = 10;
             表示件数Add = 20;
             表示件数Add = 50;
@@ -35,13 +36,29 @@ namespace WpfApp
 
             SendMessageButton.Click = メッセージ送信;
             
+            メッセージ.Value = "初期値";
+
+            表示件数ComboBox.Items = new List<string>();
+
+            表示件数ComboBox.Items.Clear();
+            表示件数ComboBox.Items.Add("a");
+            表示件数ComboBox.Items.Add("b");
+            表示件数ComboBox.Items.Clear();
+            表示件数ComboBox.Items.Add("c");
+            表示件数ComboBox.Items.Add("d");
         }
 
+        public MyTextBox メッセージ { get; } = new();
+
+        public MyComboBox 表示件数ComboBox { get; } = new();
+        
         private void メッセージ送信()
         {
-            メッセージAdd = new MessageInfo { Message = SendMessage };
+            メッセージ.Value += "SendMessage";
+            メッセージAdd = new MessageInfo { Message = メッセージ.Value };
+            //表示件数ComboBox.Items.Add("d");
         }
-        
+
         // INotifyPropertyChangedインターフェースの実装
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -49,13 +66,13 @@ namespace WpfApp
         public void RaisePropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        // テキストボックスの入力プロパティ
-        private string sendMessage;
-        public string SendMessage
-        {
-            get { return sendMessage; }
-            set { if (sendMessage != value) { sendMessage = value; RaisePropertyChanged(); } }
-        }
+        //// テキストボックスの入力プロパティ
+        //private string sendMessage;
+        //public string SendMessage
+        //{
+        //    get { return sendMessage; }
+        //    set { if (sendMessage != value) { sendMessage = value; RaisePropertyChanged(); } }
+        //}
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -95,7 +112,7 @@ namespace WpfApp
         }
 
         private readonly List<int> _表示件数List = new();
-        public List<string> 表示件数List => _表示件数List.Select(e=>$"最新{e}件表示").ToList();
+        public List<string> 表示件数List => _表示件数List.Select(e => $"最新{e}件表示").ToList();
         private int 表示件数Add
         {
             set
@@ -116,7 +133,7 @@ namespace WpfApp
     public class MessageInfo
     {
         public DateTime _Time { get; set; }
-        public string Time => (_Time.Date == DateTime.Today)? _Time.ToShortTimeString(): $"{_Time.ToShortDateString()} {_Time.ToShortTimeString()}" ;
+        public string Time => (_Time.Date == DateTime.Today) ? _Time.ToShortTimeString() : $"{_Time.ToShortDateString()} {_Time.ToShortTimeString()}";
         public string Message { get; set; }
         public string UserName { get; set; }
         public string Read => _Read ? "✓" : "";
