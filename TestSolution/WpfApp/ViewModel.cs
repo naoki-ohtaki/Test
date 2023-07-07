@@ -54,7 +54,7 @@ namespace WpfApp
         
         private void メッセージ送信()
         {
-            メッセージ.Value += "SendMessage";
+            メッセージ.Value += "A";
             メッセージAdd = new MessageInfo { Message = メッセージ.Value };
             //表示件数ComboBox.Items.Add("d");
         }
