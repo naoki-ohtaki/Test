@@ -8,3 +8,5 @@
 /TestSolution/WpfApp/bin/Debug/net7.0-windows
 /.vs
 /.gitignore
+/TestSolution/ReactiveTest/bin/Debug/net7.0-windows
+/TestSolution/ReactiveTest/obj
