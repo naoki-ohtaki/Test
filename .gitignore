@@ -10,3 +10,4 @@
 /.gitignore
 /TestSolution/ReactiveTest/bin/Debug/net7.0-windows
 /TestSolution/ReactiveTest/obj
+/TestSolution/.vs/ProjectEvaluation
