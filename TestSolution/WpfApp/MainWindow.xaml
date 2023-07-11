@@ -4,20 +4,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:wpfapp="clr-namespace:WpfApp"
         xmlns:control="clr-namespace:WpfApp.Control"
-        xmlns:items="clr-namespace:WpfApp.Items"
         d:DataContext="{d:DesignInstance Type=wpfapp:ViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Button" Margin="247,0,0,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="363"
-                Command="{Binding SendMessageButton}"/>
+        <Button Content="メッセージ送信" Margin="247,0,0,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="363"
+                Command="{Binding メッセージ送信Button}"/>
         <TextBox Margin="247,0,10,35" TextWrapping="Wrap" Text="{Binding メッセージ.Value}" Height="46" VerticalAlignment="Bottom" />
 
-        <!--<items:MyTextBox x:Name="SendMessage" 
-                         Text="{Binding Value, RelativeSource={RelativeSource Self}, UpdateSourceTrigger=PropertyChanged}" 
-                         Margin="247,0,10,35" TextWrapping="Wrap"  Height="46" VerticalAlignment="Bottom" />-->
-
-        <ListView Name="連絡List" Margin="10,10,0,10" HorizontalAlignment="Left" Width="232" ItemsSource="{Binding スレッドList}">
+        <ListView ItemsSource="{Binding スレッドListView.Value}" 
+                  Margin="10,10,0,0" HorizontalAlignment="Left" Width="232" Height="389" VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
                     <GridViewColumn
@@ -29,22 +25,13 @@
                         Header="スレッド" />
                 </GridView>
             </ListView.View>
-            <!--<ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <EventSetter Event="PreviewMouseLeftButtonUp">
-                        <EventSetter.Actions>
-                            <ActionCommand:EventToCommand Command="{Binding DataContext.ItemClickedCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}" />
-                        </EventSetter.Actions>
-                    </EventSetter>
-                </Style>
-            </ListView.ItemContainerStyle>-->
         </ListView>
-        <ComboBox Margin="615,0,10,8" Height="22" VerticalAlignment="Bottom" ItemsSource="{Binding 表示件数ComboBox.Items}" />
-        <!--<items:MyComboBox x:Name="表示件数" 
-                        ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}" 
-                        Margin="615,0,10,8" Height="22" VerticalAlignment="Bottom" />-->
+        <ComboBox ItemsSource="{Binding 表示件数ComboBox.Value}"
+                  Margin="615,0,10,8" Height="22" VerticalAlignment="Bottom" />
 
-        <ListView Name="会話List" ItemsSource="{Binding メッセージList}" Margin="247,10,10,86">
+        <ListView ItemsSource="{Binding メッセージListView.Value}" 
+                  SelectionChanged="メッセージListView_SelectionChanged"
+                  Margin="247,10,10,86">
             <ListView.View>
                 <GridView>
                     <GridViewColumn
@@ -61,9 +48,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <!--<TextBox Name="testTextBox" Text="{Binding sample}" Margin="181,0,76,58" TextWrapping="Wrap" Height="46" VerticalAlignment="Bottom" />-->
-
-        <!-- 作成したサンプルのUserControl　：　依存プロパティにViewModelのプロパティをバインドする -->
-        <!--<control:DependencyPropertyTestControl Title="{Binding Title}" Margin="304,194,190,135" />-->
+        <Button Content="スレッドを切り替え" Margin="10,0,0,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="232"
+            Command="{Binding メッセージ送信Button}"/>
     </Grid>
 </Window>

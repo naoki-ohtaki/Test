@@ -13,16 +13,16 @@ namespace WpfApp.Items
 {
     public class MyComboBox : ComboBox
     {
-        public List<string> Items
+        public new ObservableCollection<string> Value
         {
-            get { return (List<string>)GetValue(ItemsProperty); }
-            set { SetValue(ItemsProperty, value); }
+            get { return (ObservableCollection<string>)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
         }
         
-        public static readonly DependencyProperty ItemsProperty =
+        public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(
-                "Items",
-                typeof(List<string>),
+                nameof(Value),
+                typeof(ObservableCollection<string>),
                 typeof(MyComboBox),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
     }

@@ -11,12 +11,9 @@ namespace WpfApp
 
         public bool CanExecute(object? parameter) { return true; }
 
-        public void Execute(object? parameter)
-        => Click();
-        //{
-        //    MainWindow.ViewModel.SendMessage += "A";
-        //}
+        public void Execute(object? parameter) => Click();
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public Action Click { get; set; }
 
     }

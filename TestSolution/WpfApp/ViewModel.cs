@@ -7,136 +7,72 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Threading;
 using WpfApp.Items;
+using WpfApp.ViewItem;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace WpfApp
 {
-    public class ViewModel : INotifyPropertyChanged
+    public class ViewModel
     {
         private string userName = "ユーザー01";
-        public ButtonCommand SendMessageButton { get; set; } = new ButtonCommand();
+        public ButtonCommand スレッドButton { get; set; } = new();
+        public ButtonCommand メッセージ送信Button { get; set; } = new ButtonCommand();
 
         public ViewModel()
         {
-            スレッドAdd = new ThreadInfo { Thread = "General" };
-            スレッドAdd = new ThreadInfo { Thread = "ニュース" };
-            スレッドAdd = new ThreadInfo { Thread = "プロジェクト" };
+            //初期値設定 //TODO テスト用のためSendMessage実装後に見直し必要
+            初期値設定();
 
-            メッセージAdd = new MessageInfo { Message = "asdfasdfasdf" };
-            メッセージAdd = new MessageInfo { Message = "asdfasdfasdf" };
-            メッセージAdd = new MessageInfo { Message = "asdfasdfasdf" };
-            メッセージAdd = new MessageInfo { Message = "asdfasdfasdf" };
-            
-            表示件数Add = 10;
-            表示件数Add = 20;
-            表示件数Add = 50;
-            表示件数Add = 100;
+            メッセージ送信Button.Click = メッセージ送信;
 
-            SendMessageButton.Click = メッセージ送信;
-            
-            メッセージ.Value = "初期値";
-
-            表示件数ComboBox.Items = new List<string>();
-
-            表示件数ComboBox.Items.Clear();
-            表示件数ComboBox.Items.Add("a");
-            表示件数ComboBox.Items.Add("b");
-            表示件数ComboBox.Items.Clear();
-            表示件数ComboBox.Items.Add("c");
-            表示件数ComboBox.Items.Add("d");
+            スレッドButton.Click = スレッド切り替え;
         }
-
+        
         public MyTextBox メッセージ { get; } = new();
 
         public MyComboBox 表示件数ComboBox { get; } = new();
-        
+
+        public MyListView<MessageInfo> メッセージListView { get; } = new();
+
+        public MyListView<ThreadInfo> スレッドListView { get; } = new();
+
+        private void 初期値設定()
+        {
+            スレッドListView.Value = new ObservableCollection<ThreadInfo>();
+            スレッドListView.Value.Add(new ThreadInfo { Thread = "General", Id = スレッドListView.Value.Count + 1 });
+            スレッドListView.Value.Add(new ThreadInfo { Thread = "ニュース", Id = スレッドListView.Value.Count + 1 });
+            スレッドListView.Value.Add(new ThreadInfo { Thread = "プロジェクト", Id = スレッドListView.Value.Count + 1 });
+
+            メッセージListView.Value = new ObservableCollection<MessageInfo>();
+            メッセージListView.Value.Add(new MessageInfo { Message = "テストメッセージ1", _Time = DateTime.Now });
+            メッセージListView.Value.Add(new MessageInfo { Message = "テストメッセージ2", _Time = DateTime.Now });
+            メッセージListView.Value.Add(new MessageInfo { Message = "テストメッセージ3", _Time = DateTime.Now });
+            メッセージListView.Value.Add(new MessageInfo { Message = "テストメッセージ4", _Time = DateTime.Now });
+
+            表示件数ComboBox.Value = new ObservableCollection<string>();
+            表示件数ComboBox.Value.Add("a");
+            表示件数ComboBox.Value.Add("b");
+
+            メッセージ.Value = "初期値";
+        }
+
         private void メッセージ送信()
         {
+            //TODO 本当はここでSendMessageする。今は画面系のテストコードになっている。
             メッセージ.Value += "A";
-            メッセージAdd = new MessageInfo { Message = メッセージ.Value };
-            //表示件数ComboBox.Items.Add("d");
+            メッセージListView.Value.Add(new MessageInfo { Message = メッセージ.Value, _Time = DateTime.Now });
+            表示件数ComboBox.Value.Add(メッセージ.Value);
         }
 
-        // INotifyPropertyChangedインターフェースの実装
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        // 変更通知
-        public void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-        //// テキストボックスの入力プロパティ
-        //private string sendMessage;
-        //public string SendMessage
-        //{
-        //    get { return sendMessage; }
-        //    set { if (sendMessage != value) { sendMessage = value; RaisePropertyChanged(); } }
-        //}
-
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        private void スレッド切り替え()
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            //TODO 本当はListViewの選択変更時のイベントでやりたい
+            //TODO メッセージListViewに、選択されたスレッドの内容を表示
+            //var test = メッセージListView.SelectedIndex;
         }
-
-        private readonly ObservableCollection<ThreadInfo> _スレッドList = new();
-        public ObservableCollection<ThreadInfo> スレッドList => _スレッドList;
-        private ThreadInfo スレッドAdd
-        {
-            set
-            {
-                var data = value;
-                data.Id = _スレッドList.Count + 1;
-                _スレッドList.Add(data);
-                NotifyPropertyChanged();
-            }
-        }
-
-        private readonly ObservableCollection<MessageInfo> _メッセージList = new();
-        public ObservableCollection<MessageInfo> メッセージList => _メッセージList;
-        //public ObservableCollection<MessageInfo> メッセージList = new();
-
-        public MessageInfo メッセージAdd
-        {
-            set
-            {
-                var data = value;
-                data._Time = DateTime.Now;
-                data.UserName = userName;
-                _メッセージList.Add(data);
-                NotifyPropertyChanged();
-            }
-        }
-
-        private readonly List<int> _表示件数List = new();
-        public List<string> 表示件数List => _表示件数List.Select(e => $"最新{e}件表示").ToList();
-        private int 表示件数Add
-        {
-            set
-            {
-                var data = value;
-                _表示件数List.Add(data);
-                NotifyPropertyChanged();
-            }
-        }
-    }
-
-    public class ThreadInfo
-    {
-        public int Id { get; set; }
-        public string Thread { get; set; }
-    }
-
-    public class MessageInfo
-    {
-        public DateTime _Time { get; set; }
-        public string Time => (_Time.Date == DateTime.Today) ? _Time.ToShortTimeString() : $"{_Time.ToShortDateString()} {_Time.ToShortTimeString()}";
-        public string Message { get; set; }
-        public string UserName { get; set; }
-        public string Read => _Read ? "✓" : "";
-        public bool _Read { get; set; } = true;
+        
     }
 }

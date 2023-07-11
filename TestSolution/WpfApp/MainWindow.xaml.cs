@@ -15,9 +15,9 @@ namespace WpfApp
             DataContext = new ViewModel();
         }
 
-        private void ListViewItem_Click(object sender, RoutedEventArgs e)
+        public void メッセージListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
         }
-        
     }
 }
