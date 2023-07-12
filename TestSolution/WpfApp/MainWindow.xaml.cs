@@ -1,8 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-
-namespace WpfApp
+﻿namespace WpfApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -13,11 +9,6 @@ namespace WpfApp
         {
             InitializeComponent();
             DataContext = new ViewModel();
-        }
-
-        public void メッセージListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

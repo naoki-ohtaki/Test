@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Xml.Linq;
+using System.Windows.Controls;
 
 namespace WpfApp.Items
 {
@@ -15,8 +8,8 @@ namespace WpfApp.Items
     {
         public new ObservableCollection<string> Value
         {
-            get { return (ObservableCollection<string>)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            get => (ObservableCollection<string>)GetValue(ValueProperty);
+            set => SetValue(ValueProperty, value);
         }
         
         public static readonly DependencyProperty ValueProperty =

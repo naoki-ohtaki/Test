@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace WpfApp
 {
-    public class ButtonCommand : ICommand
+    public class ExecuteCommand : ICommand
     {
         //public MainWindow MainWindow { get; set; }
 
@@ -11,10 +11,10 @@ namespace WpfApp
 
         public bool CanExecute(object? parameter) { return true; }
 
-        public void Execute(object? parameter) => Click();
+        public void Execute(object? parameter) => Action();
 
         // ReSharper disable once MemberCanBePrivate.Global
-        public Action Click { get; set; }
+        public Action Action { get; set; }
 
     }
 }

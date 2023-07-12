@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows;
 
 namespace WpfApp.Items
 {
@@ -12,10 +7,10 @@ namespace WpfApp.Items
     {
         public string Value
         {
-            get { return (string)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            get => (string)GetValue(ValueProperty);
+            set => SetValue(ValueProperty, value);
         }
-        
+
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(
                 nameof(Value),

@@ -13,12 +13,12 @@ namespace WpfApp.Items
 {
     public class MyListView<T> : ListView
     {
-        public new ObservableCollection<T> Value
+        public ObservableCollection<T> Value
         {
-            get { return (ObservableCollection<T>)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            get => (ObservableCollection<T>)GetValue(ValueProperty);
+            set => SetValue(ValueProperty, value);
         }
-        
+
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(
                 nameof(Value),

@@ -11,7 +11,7 @@ namespace WpfApp.ViewItem
 
         public string UserName { get; set; }
 
-        public bool _Read { get; set; } = true;
+        public bool _Read { get; set; } = false;
         public string Read => _Read ? "✓" : "";
     }
 }
